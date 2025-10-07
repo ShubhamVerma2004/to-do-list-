@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    h1 { color: #2563eb; }
+    ul { list-style-type: none; padding: 0; }
+    li { background: #f4f4f4; margin: 5px 0; padding: 10px; border-radius: 6px; }
+    form { margin-bottom: 20px; }
+    button { background: #2563eb; color: white; border: none; padding: 5px 10px; border-radius: 4px; }
+    button:hover { background: #1e40af; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>📝 My To-Do List</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Enter new task" required>
+    <button type="submit">Add</button>
+  </form>
+
+  <ul>
+    {% for task in tasks %}
+      <li>
+        {{ task.title }}
+        <a href="{% url 'delete_task' task.id %}" style="float:right;color:red;">❌</a>
+      </li>
+    {% empty %}
+      <li>No tasks yet!</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
